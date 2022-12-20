@@ -129,8 +129,8 @@
 
           async init () {
             // initialize pocketbase
-            //this.client = new PocketBase('https://jv-todoapp.fly.dev');
-            this.client = new PocketBase('http://127.0.0.1:8090');
+            this.client = new PocketBase('https://jv-todoapp.fly.dev');
+            //this.client = new PocketBase('http://127.0.0.1:8090');
 
             // capture invalid token
             this.client.afterSend = function (response, data) {
