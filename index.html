@@ -3,22 +3,87 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DooDoo.it - Your Pocket Todo List">
+    <meta name="description" content="jvtodoapp.netlify.app - Portfolio Todo List">
 
-    <title>DooDoo - Pocket To-Do List</title>
+    <title>JV Todo App - Portfolio Todo List</title>
 
     <script src="js/pocketbase.umd.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+      [x-cloak] { 
+          display: none !important;
+      }
+      nav[role=tablist] {
+          justify-content: flex-start;
+          user-select: none;
+          border-bottom: 1px solid var(--muted-border-color);
+          margin-bottom: var(--spacing);
+      }
+      a[role=tab] {
+          color: var(--form-element-disabled-border-color);
+          border-bottom: 1px solid transparent;
+          transition: all var(--transition);
+          min-width: 120px;
+          text-align: center;
+          user-select: none;
+      }
+      a[role=tab].active {
+          color: var(--contrast);
+          border-radius: 0;
+          border-bottom: 1px solid var(--contrast);
+      }
+      a[role=tab]:focus {
+          background: transparent;
+      }
+      div.grid div {
+          min-height: 200px;
+          animation-duration: 0.45s;
+          -webkit-animation-duration: 0.45s;
+          animation-fill-mode: both;
+          -webkit-animation-fill-mode: both;
+          -webkit-animation-name: slideIn;
+          animation-name: slideIn;
+      }
+      @keyframes slideIn {
+          0% {
+              transform: translateY(1rem);
+              opacity: 0;
+          }
+          100% {
+              transform:translateY(0rem);
+              opacity: 1;
+          }
+          0% {
+              transform: translateY(1rem);
+              opacity: 0;
+          }
+      }
+      @-webkit-keyframes slideIn {
+          0% {
+              -webkit-transform: transform;
+              -webkit-opacity: 0;
+          }
+          100% {
+              -webkit-transform: translateY(0);
+              -webkit-opacity: 1;
+          }
+          0% {
+              -webkit-transform: translateY(1rem);
+              -webkit-opacity: 0;
+          }
+      }
+  </style>
   </head>
   <body>
     <div x-data="lists" class="container">
+      
       <nav>
         <ul>
           <li>
-            <h1 @click="selectedList = null" style="margin:0; text-align: center; cursor: pointer">DooDoo</h1>
+            <h1 @click="selectedList = null" style="margin:0; text-align: center; cursor: pointer">JV Todo</h1>
           </li>
         </ul>
         <ul>
@@ -28,7 +93,21 @@
 
       <!-- login / signup -->
       <article x-show="showLogin" x-transition>
-        <h2>Login</h2>
+        <div x-data="{ tab: 'login' }">
+          <!-- nav -->
+          <nav role="tablist">
+            <ul>
+                <li>
+                  <a :class="{ 'active': tab === 'login' }" x-on:click.prevent="tab = 'login'" href="#" role="tab">Login</a>
+                </li>
+                <li>
+                  <a :class="{ 'active': tab === 'register' }" x-on:click.prevent="tab = 'register'" href="#" role="tab">Register</a>
+                </li>          
+            </ul>
+          </nav>
+          <!-- content -->
+          <div x-show="tab === 'login'">
+            <h2>Login</h2>
 
         <label for="email">Email</label>
         <input x-model="email" type="email" id="email" placeholder="Email address">
@@ -39,10 +118,9 @@
         <button @click="login()" class="contrast outline">Login</button>
 
         <mark x-show="loginMessage" x-text="loginMessage"></mark>
-
-        <hr style="margin: 4rem;"></hr>
-
-        <h2>Signup</h2>
+          </div>
+          <div x-show="tab === 'register'">
+            <h2>Signup</h2>
 
         <label for="email">Email</label>
         <input x-model="email" type="email" id="email" placeholder="Email address">
@@ -56,7 +134,8 @@
         <button @click="signup()" class="contrast outline">Signup</button>
 
         <mark x-show="signupMessage" x-text="signupMessage"></mark>
-
+          </div>
+         </div>
       </article>
 
       <!-- show lists -->
@@ -95,7 +174,7 @@
         <hr style="margin: 2rem"></hr>
 
         <label for="newItem">Create New Item</label>
-        <input x-model="newItem" id="newItem" type="newItem" placeholder="What do you want to DooDoo?">
+        <input x-model="newItem" id="newItem" type="newItem" placeholder="What's Your Next Todo?">
         <button @click="createItem" class="contrast outline">Create</button>
 
         <hr style="margin: 1rem;"></hr>
