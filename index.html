@@ -159,7 +159,7 @@
 
       <!-- show selectedList items -->
       <article x-show="!showLogin && selectedList" x-transition style="margin-top: 10%;">
-        <h2>Test</h2>
+        <h2 x-text="selectedList.name"></h2>
 
         <template x-for="item in items">
           <div style="display:flex; justify-content: space-between; margin-top: 1rem">
